@@ -12,8 +12,8 @@ class System {
    * @param {Object} ch - character
    * @return 
    */
-   
-  addCharacter(guild, user, ch) { 
+
+  addCharacter(guild, user, ch) {
     if (!ch) ch = characters[0]
     this.fixUser(guild, user);
 
@@ -23,7 +23,7 @@ class System {
     db.push(SqlDecode(guild.id, user.id, 'characters'), character)
     return;
   }
-  
+
   /**
    * select a character for get xp
    * @param {Object} guild
@@ -32,10 +32,10 @@ class System {
    * @return 
    */
 
-  selected(guild, user, charcter) { 
+  selected(guild, user, charcter) {
     db.set(SqlDecode(guild.id, user.id, 'selected'), charcter)
   }
-  
+
   /**
    * get info from a user
    * @param {Object} guild
@@ -46,7 +46,7 @@ class System {
   getUser(guild, user) {
     return db.get(SqlDecode(guild.id, user.id))
   }
-  
+
   /**
    * get info from a user
    * @param {Object} guild
@@ -58,14 +58,14 @@ class System {
   findCharacter(guild, user, name) {
     return db.get(SqlDecode(guild.id, user.id, 'characters')).filter(x => x.name == name)
   }
-  
+
   /**
    * make a new id for a character
    * @param {Object} guild
    * @return {String}
    */
 
-  newCharacter(guild) { 
+  newCharacter(guild) {
     let id = generateUUID()
     if (db.has(id)) {
       newPlayer(guild.id)
@@ -73,7 +73,7 @@ class System {
 
     return id
   }
-  
+
   /**
    * add a random common character to a new character
    * @param {Object} guild
@@ -83,10 +83,10 @@ class System {
 
   newPlayer(guild, user) {
     // addCharacter(guild, user, ch){ 
-    this.addCharacter(guild, user/*, this.randomCharacter('common')*/)
-	return;
+    this.addCharacter(guild, user /*, this.randomCharacter('common')*/ )
+    return;
   }
-  
+
   /**
    * remove a character from a user
    * @param {Object} guild
@@ -94,33 +94,33 @@ class System {
    * @param {String} character - charcter id 
    * @return 
    */
-  
+
   removeCharacter(guild, user, character) {
     let removed = db.get(SqlDecode(guild.id, user.id, 'characters')).filter(x => x.character != character)
-	db.set(SqlDecode(guild.id, user.id, 'characters'), removed)
-	return;
+    db.set(SqlDecode(guild.id, user.id, 'characters'), removed)
+    return;
   }
-  
+
   /**
    * get a random character
    * types: common | epic |legedery etc
    * @param {Object} type
    * @return {Object}
    */
-  
+
   getRandomCharacter(type) {
-    const random = (items) => items[Math.floor(Math.random()*items.length)];
-    if(!type){
-	 let chars = characters.filter(x => x.type == type)
-	 return random(chars)
-	}
-	return random(characters)
+    const random = (items) => items[Math.floor(Math.random() * items.length)];
+    if (!type) {
+      let chars = characters.filter(x => x.type == type)
+      return random(chars)
+    }
+    return random(characters)
   }
 
   getCharacterList(filter) {
 
   }
-  
+
   addItemCharacter(guild, user, item, character) {
 
   }
@@ -135,7 +135,7 @@ class System {
   openChest(type) {
 
   }
-  
+
   /**
    * check if server | user has db
    * @param {Object} guild
@@ -153,7 +153,7 @@ class System {
     if (!db.has(SqlDecode(guild.id, user.id))) {
       db.set(SqlDecode(guild.id, user.id), {})
     }
-	return;
+    return;
   }
 }
 
